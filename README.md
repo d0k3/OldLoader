@@ -2,7 +2,7 @@
 Load new stuff from old entrypoints on the 3DS console
 
 ## Instructions
-Copy the payload of your choice to your SD card as `arm9loaderhax.bin`, then run it via the entrypoint of your choice, done. Simple, no?
+Copy the payload of your choice to your SD card as `arm9loaderhax.bin`, then run it via the entrypoint of your choice (requires copying / setting up more stuff, ofc), done. Simple, no? Also keep in mind this is for advanced users only. Everyone else just refer to the Guide and get up to date on your 3DS hacking.
 
 ## Credits
 * **Normmatt**, for sdmmc.c / sdmmc.h
