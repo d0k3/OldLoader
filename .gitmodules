@@ -1,0 +1,16 @@
+[submodule "BrahmaLoader"]
+	path = BrahmaLoader
+	url = https://github.com/d0k3/BrahmaLoader.git
+	ignore = dirty
+[submodule "CakesROP"]
+	path = CakesROP
+	url = https://github.com/mid-kid/CakesROP.git
+	ignore = dirty
+[submodule "CakeHax"]
+	path = CakeHax
+	url = https://github.com/dukesrg/CakeHax.git
+	ignore = dirty
+[submodule "2xrsa"]
+	path = 2xrsa
+	url = https://github.com/b1l1s/2xrsa.git
+	ignore = dirty
