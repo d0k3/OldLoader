@@ -1,0 +1,6 @@
+APP_TITLE = OldLoader
+APP_DESCRIPTION = Load new stuff from old entrypoints
+APP_AUTHOR = d0k3, Wolfvak
+
+PAYLOAD_MEM = 1
+VOODOO = 0x3F
