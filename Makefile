@@ -18,9 +18,9 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 export TARGET	:=	OldLoader
 BUILD		:=	build
-SOURCES		:=	source source/common source/fs source/crypto source/fatfs source/nand source/safety
+SOURCES		:=	source source/common source/fatfs
 DATA		:=	data
-INCLUDES	:=	source source/common source/font source/fs source/crypto source/fatfs source/nand source/safety
+INCLUDES	:=	source source/common source/fatfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -92,10 +92,10 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
-.PHONY: common clean all gateway firm 2xrsa binary cakehax cakerop brahma release
+.PHONY: common clean all gateway binary cakehax cakerop brahma release
 
 #---------------------------------------------------------------------------------
-all: firm
+all: binary gateway cakehax cakerop brahma
 
 common:
 	@[ -d $(OUTPUT_D) ] || mkdir -p $(OUTPUT_D)
@@ -107,17 +107,9 @@ submodules:
 binary: common
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-firm: binary
-	@firmtool build $(OUTPUT).firm -n 0x23F00000 -e 0 -D $(OUTPUT).bin -A 0x23F00000 -C NDMA -i
-
 gateway: binary
 	@cp resources/LauncherTemplate.dat $(OUTPUT_D)/Launcher.dat
 	@dd if=$(OUTPUT).bin of=$(OUTPUT_D)/Launcher.dat bs=1497296 seek=1 conv=notrunc
-
-2xrsa: binary
-	@make --no-print-directory -C 2xrsa
-	@mv $(OUTPUT).bin $(OUTPUT_D)/arm9.bin
-	@mv $(CURDIR)/2xrsa/bin/arm11.bin $(OUTPUT_D)/arm11.bin
 
 cakehax: submodules binary
 	@make dir_out=$(OUTPUT_D) name=$(TARGET).dat -C CakeHax bigpayload
@@ -140,14 +132,11 @@ release:
 	@rm -fr $(BUILD) $(OUTPUT_D) $(RELEASE)
 	@make --no-print-directory binary
 	@make --no-print-directory gateway
-	# @make --no-print-directory firm
-	@make --no-print-directory 2xrsa
 	@make --no-print-directory cakerop
 	@make --no-print-directory brahma
 	@[ -d $(RELEASE) ] || mkdir -p $(RELEASE)
 	@[ -d $(RELEASE)/$(TARGET) ] || mkdir -p $(RELEASE)/$(TARGET)
-	# @cp $(OUTPUT).bin $(RELEASE)
-	# @cp $(OUTPUT).firm $(RELEASE)
+	@cp $(OUTPUT).bin $(RELEASE)
 	@cp $(OUTPUT_D)/arm9.bin $(RELEASE)
 	@cp $(OUTPUT_D)/arm11.bin $(RELEASE)
 	@cp $(OUTPUT).dat $(RELEASE)
@@ -166,8 +155,6 @@ clean:
 	@-make clean --no-print-directory -C CakesROP
 	@echo clean BrahmaLoader...
 	@-make clean --no-print-directory -C BrahmaLoader
-	@echo clean 2xrsa...
-	@-make clean --no-print-directory -C 2xrsa
 	@echo clean OldLoader...
 	@rm -fr $(BUILD) $(OUTPUT_D) $(RELEASE)
 
