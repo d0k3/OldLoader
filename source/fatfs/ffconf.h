@@ -8,14 +8,14 @@
 / Function Configurations
 /---------------------------------------------------------------------------*/
 
-#define _FS_READONLY	0
+#define _FS_READONLY	1
 /* This option switches read-only configuration. (0:Read/Write or 1:Read-only)
 /  Read-only configuration removes writing API functions, f_write(), f_sync(),
 /  f_unlink(), f_mkdir(), f_chmod(), f_rename(), f_truncate(), f_getfree()
 /  and optional writing functions as well. */
 
 
-#define _FS_MINIMIZE	0
+#define _FS_MINIMIZE	3
 /* This option defines minimization level to remove some basic API functions.
 /
 /   0: All basic functions are enabled.
@@ -56,7 +56,7 @@
 /  (0:Disable or 1:Enable) Also _FS_READONLY needs to be 0 to enable this option. */
 
 
-#define _USE_LABEL		1
+#define _USE_LABEL		0
 /* This option switches volume label functions, f_getlabel() and f_setlabel().
 /  (0:Disable or 1:Enable) */
 
@@ -147,12 +147,12 @@
 / Drive/Volume Configurations
 /---------------------------------------------------------------------------*/
 
-#define _VOLUMES	10
+#define _VOLUMES	1
 /* Number of volumes (logical drives) to be used. */
 
 
 #define _STR_VOLUME_ID	0
-#define _VOLUME_STRS	"sdcard","sysnand","systwln","systwlp","emunand","emutwln","emutwlp","imgnand","imgtwln","imgtwlp"
+#define _VOLUME_STRS	"sdmc"
 /* _STR_VOLUME_ID switches string support of volume ID.
 /  When _STR_VOLUME_ID is set to 1, also pre-defined strings can be used as drive
 /  number in the path name. _VOLUME_STRS defines the drive ID strings for each
@@ -202,7 +202,7 @@
 / System Configurations
 /---------------------------------------------------------------------------*/
 
-#define	_FS_TINY	0
+#define	_FS_TINY	1
 /* This option switches tiny buffer configuration. (0:Normal or 1:Tiny)
 /  At the tiny configuration, size of file object (FIL) is reduced _MAX_SS bytes.
 /  Instead of private sector buffer eliminated from the file object, common sector
@@ -229,7 +229,7 @@
 /  These options have no effect at read-only configuration (_FS_READONLY = 1). */
 
 
-#define	_FS_LOCK	32
+#define	_FS_LOCK	0
 /* The option _FS_LOCK switches file lock function to control duplicated file open
 /  and illegal operation to open objects. This option must be 0 when _FS_READONLY
 /  is 1.

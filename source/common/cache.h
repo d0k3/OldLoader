@@ -1,43 +1,9 @@
-/*
-*   This file is part of Luma3DS
-*   Copyright (C) 2016-2017 Aurora Wright, TuxSH
-*
-*   This program is free software: you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation, either version 3 of the License, or
-*   (at your option) any later version.
-*
-*   This program is distributed in the hope that it will be useful,
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*   GNU General Public License for more details.
-*
-*   You should have received a copy of the GNU General Public License
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*
-*   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
-*       * Requiring preservation of specified reasonable legal notices or
-*         author attributions in that material or in the Appropriate Legal
-*         Notices displayed by works containing it.
-*       * Prohibiting misrepresentation of the origin of that material,
-*         or requiring that modified versions of such material be marked in
-*         reasonable ways as different from the original version.
-*/
-
-#pragma once
-
 #include "common.h"
 
-/***
-    The following functions flush the data cache, then waits for all memory transfers to be finished.
-    The data cache and/or the instruction cache MUST be flushed before doing one of the following:
-        - rebooting
-        - powering down
-        - setting the ARM11 entrypoint to execute a function
-        - jumping to a payload
-***/
+void (*wbDC)(void) = (void(*)(void))(0xFFFF07FC);
+void (*invDC)(void) = (void(*)(void))(0xFFFF07F0);
+void (*invIC)(void) = (void(*)(void))(0xFFFF0AB4);
 
-void flushEntireDCache(void); //actually: "clean and flush"
-void flushDCacheRange(void *startAddress, u32 size);
-void flushEntireICache(void);
-void flushICacheRange(void *startAddress, u32 size);
+void (*wbDC_range)(void *s,void *e)  = (void(*)(void*,void*))(0xFFFF0884);
+void (*invDC_range)(void *s,void *e) = (void(*)(void*,void*))(0xFFFF0868);
+void (*invIC_range)(void *s,void *e) = (void(*)(void*,void*))(0xFFFF0AC0);

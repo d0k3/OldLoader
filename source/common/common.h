@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 #define u8 uint8_t
@@ -51,3 +50,5 @@ inline u32 strchrcount(const char* str, char symbol) {
     }
     return count;
 }
+
+void __attribute__((noreturn)) BootFirm(void *firm, char *path);
