@@ -10,7 +10,3 @@
 	path = CakeHax
 	url = https://github.com/dukesrg/CakeHax.git
 	ignore = dirty
-[submodule "2xrsa"]
-	path = 2xrsa
-	url = https://github.com/b1l1s/2xrsa.git
-	ignore = dirty
