@@ -95,7 +95,7 @@ void main(void)
         res = f_read(&firm, FIRM_BUFFER, flen, &br);
         if ((flen == br) && (res == FR_OK) &&
             (FirmValid(FIRM_BUFFER, flen))) {
-            BootFirm(FIRM_BUFFER, "sdmc"FIRM_PATH);
+            BootFirm(FIRM_BUFFER);
         }
     }
 

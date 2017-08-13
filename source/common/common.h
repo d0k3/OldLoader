@@ -51,4 +51,4 @@ inline u32 strchrcount(const char* str, char symbol) {
     return count;
 }
 
-void __attribute__((noreturn)) BootFirm(void *firm, char *path);
+void __attribute__((noreturn)) BootFirm(void *firm);
