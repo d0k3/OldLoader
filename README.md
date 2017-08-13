@@ -11,7 +11,7 @@ OldLoader does not provide a proper boot9strap environment (regarding AES key an
 * **Normmatt**, for sdmmc.c / sdmmc.h
 * **Cha(N)**, **Kane49**, and all other FatFS contributors for FatFS
 * **Wolfvak** for providing the FIRM chainloader and being a great guy
-* **Al3x_19m** for providing his assistiance in testing this
+* **Al3x_10m** for providing his assistance in testing this
 * **Gelex** for being of great help on countless occasions
 * The fine folks on **freenode #Cakey**
 * All **[3dbrew.org](https://www.3dbrew.org/wiki/Main_Page) editors**
