@@ -137,8 +137,6 @@ release:
 	@[ -d $(RELEASE) ] || mkdir -p $(RELEASE)
 	@[ -d $(RELEASE)/$(TARGET) ] || mkdir -p $(RELEASE)/$(TARGET)
 	@cp $(OUTPUT).bin $(RELEASE)
-	@cp $(OUTPUT_D)/arm9.bin $(RELEASE)
-	@cp $(OUTPUT_D)/arm11.bin $(RELEASE)
 	@cp $(OUTPUT).dat $(RELEASE)
 	@cp $(OUTPUT).nds $(RELEASE)
 	@cp $(OUTPUT).3dsx $(RELEASE)/$(TARGET)
