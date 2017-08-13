@@ -2,11 +2,8 @@
 .arm
 .align 4
 
-.equ ARG_MAGIC, 0xBEEF
 .equ MPCORE_LD, 0x27FFFB00
 .equ STUB_LOC,  0x27FFFC00
-.equ FBPTR_LOC, 0x23FFFE00
-.equ ARGV_LOC,  0x23FFFE20
 
 .cpu mpcore
 MPCore_stub:
@@ -30,7 +27,7 @@ MPCore_stub_end:
 .equ INITCP15, 0xFFFF0C58 @ void reset_cp15(void)
 
 .cpu arm946e-s
-@ void BootFirm_stub(FirmHeader *firm, char *path)
+@ void BootFirm_stub(FirmHeader *firm)
 @ r0-r8: scratch registers
 @ r9: FIRM path
 @ r10: FIRM header
@@ -38,7 +35,6 @@ MPCore_stub_end:
 BootFirm_stub:
     mov r10, r0
     add r11, r0, #0x40
-    mov r9, r1
 
     mov r4, #4
     .LBootFirm_stub_copysect:
@@ -73,21 +69,7 @@ BootFirm_stub:
         blx r5
 
         @ Registers:
-        @ R0 = 0x00000002
-        @ R1 = 0x23FFFE10
-        @ R2 = 0x0000BEEF
-        @ R3-R14 are undefined
-
-        mov r0, #2
-        ldr r1, =ARGV_LOC
-        ldr r2, =ARG_MAGIC
-
-
-    @ Setup argv
-    str r9, [r1, #0x00] @ FIRM path / argv[0]
-
-    ldr r3, =FBPTR_LOC
-    str r3, [r1, #0x04] @ Framebuffers / argv[1]
+        @ R0-R14 are undefined
 
     @ Fetch FIRM entrypoints
     ldr r3, [r10, #0x08] @ ARM11 entrypoint
@@ -103,7 +85,7 @@ BootFirm_stub:
 .pool
 BootFirm_stub_end:
 
-@ void BootFirm(FirmHeader *firm, char *path)
+@ void BootFirm(FirmHeader *firm)
 @ BootFirm_stub wrapper
 @ No checks are performed on the data
 .global BootFirm
@@ -111,12 +93,8 @@ BootFirm_stub_end:
 BootFirm:
     mov r10, r0
 
-    @ Copy the FIRM path somewhere safe
-    ldr r0, =(ARGV_LOC+8)
-    mov r11, r0
-    blx strcpy
-
     @ Relocate the MPCore stub binary
+    @ AXI WRAM is non-cacheable, so there's no need to writeback
     ldr r4, =MPCORE_LD
     adr r1, MPCore_stub
     adr r2, MPCore_stub_end
@@ -145,7 +123,6 @@ BootFirm:
     blx memcpy
 
     mov r0, r10
-    mov r1, r11
 
     bx r4
     b .
